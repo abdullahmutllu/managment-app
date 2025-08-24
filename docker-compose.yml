@@ -1,0 +1,27 @@
+﻿services:
+  mongo.db.product:
+    restart: always  # Container her durduğunda yeniden başlat
+    image: mongo:8.0-rc  # MongoDB 8.0 RC imajı
+    container_name: mongo.db.product.container  
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}  
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD} 
+    ports:
+      - "27030:27017"  # Host:27030 → Container:27017 port yönlendirme => host makinenin 27030 portunu container'ın 27017 portuna yönlendirir
+    volumes:
+      - mongo.db.product.volume:/data/db  # Verileri kalıcı hale getirmek için volume
+
+  # Mongo-Express Service (Web Arayüzü)
+  mongo.db.product.ui:
+    image: mongo-express:1.0.2-20-alpine3.19  # Mongo-Express imajı
+    container_name: mongo.db.product.ui  
+    ports:
+      - "27032:8081"  # Host:27032 → Container:8081 port yönlendirme
+    environment:
+      ME_CONFIG_MONGODB_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo.db.product:27017/"
+      ME_CONFIG_BASICAUTH: "false"  # HTTP basic auth kapalı  => yani kısaca şifresiz erişime izin veriyor
+    depends_on:
+      - mongo.db.product  # Önce MongoDB'nin başlamasını bekle
+
+volumes:
+  mongo.db.product.volume:  # MongoDB verileri için named volume
