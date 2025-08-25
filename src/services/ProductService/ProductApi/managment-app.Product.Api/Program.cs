@@ -8,15 +8,16 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddApplicationService();
 builder.Services.AddPersistenceService();
+builder.Services.AddAuthenticationAndAuthorizationService(builder.Configuration);
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers(); // veya .RequireAuthorization();
 
 app.Run();
