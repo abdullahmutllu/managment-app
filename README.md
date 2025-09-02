@@ -1,3 +1,4 @@
 Mikroservices Mimarisi Kullanılıyor , Servisler .net Core ile frontend next js (Threejs) kullanılarak geliştirmekteyim
 login/register page
-![login](https://github.com/user-attachments/assets/5fef24b7-1b89-4ab6-aadf-20ed80e832a8)
+![login](https://github.com/user-attachments/assets/6e9c0bf0-a26c-45a6-9db0-b739ac889052)
+
